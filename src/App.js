@@ -17,6 +17,7 @@ function App() {
 	const [displayGame, setDisplayGame] = useState(false);
 	//set round
 	const [round, setRound] = useState(1);
+	//setPigeon handler function
 	const setPigeonHandler = (pigeon) => {
 		if (round === 1) {
 			pigeon === BluePigeon
@@ -24,22 +25,21 @@ function App() {
 				: pigeon === RedPigeon
 				? setPigeon(RedEgg)
 				: setPigeon(GreenEgg);
-		} else {
-			pigeon === BlueEgg
-				? setPigeon(BluePigeon)
-				: pigeon === RedEgg
-				? setPigeon(RedPigeon)
-				: setPigeon(GreenPigeon);
 		}
 		setDisplayGame(true);
 	};
 	const setRoundHandler = () => {
 		setRound(2);
+		pigeon === BlueEgg
+			? setPigeon(BluePigeon)
+			: pigeon === RedEgg
+			? setPigeon(RedPigeon)
+			: setPigeon(GreenPigeon);
 	};
 
 	return (
 		<div className='App'>
-			<Home setPigeonHandler={setPigeonHandler} />
+			{displayGame === false && <Home setPigeonHandler={setPigeonHandler} />}
 			{/* <EggAndPigeon /> */}
 			{displayGame === true && (
 				<Game pigeon={pigeon} setRoundHandler={setRoundHandler} />
