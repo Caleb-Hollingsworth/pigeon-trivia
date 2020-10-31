@@ -1,39 +1,50 @@
-import React from 'react';
+import React, { Component, useEffect } from 'react';
 import './Game.css';
 import data from '../../Apprentice_TandemFor400_Data.json';
+import { render } from '@testing-library/react';
 let answersCounter = 0;
-let answersArray = [];
-const Game = (props) => {
-	const gameQuestion = data.map((question) => {
+let randomInsertIndex;
+
+class Game extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			answersArray: [],
+		};
+	}
+	componentDidMount() {
+		randomInsertIndex = Math.floor(Math.random() * 3);
+		return this.gameAnswers();
+	}
+	gameQuestion = data.map((question) => {
 		return (
 			<div>
 				<h1>{question.question}</h1>
 			</div>
 		);
 	});
-	const gameAnswers = () => {
-		data[answersCounter].incorrect.push(data[answersCounter].correct);
-		answersArray.push(data[answersCounter].incorrect);
-
-		return console.log(answersArray);
+	gameAnswers = () => {
+		this.state.answersArray.push(...data[answersCounter].incorrect);
+		this.state.answersArray.splice(
+			randomInsertIndex,
+			0,
+			data[answersCounter].correct
+		);
 	};
 
-	const populateAnswers = () => {
-		for (let i = 0; i < answersArray.length; i++) {
-			console.log(answersArray[i]);
-		}
-	};
-	return (
-		<div>
+	render() {
+		return (
 			<div>
-				<img src={props.pigeon} alt='pigeon'></img>
+				<div>
+					<img src={this.props.pigeon} alt='pigeon'></img>
+				</div>
+				<div>{this.gameQuestion[0]}</div>
+				<button>{this.state.answersArray[0]}</button>
+				<button>{this.state.answersArray[1]}</button>
+				<button>{this.state.answersArray[2]}</button>
+				<button>{this.state.answersArray[3]}</button>
 			</div>
-			<div>{gameQuestion[0]}</div>
-			<div>{populateAnswers}</div>
-			<button onClick={gameAnswers}>yo</button>
-			<button onClick={populateAnswers}>click</button>
-		</div>
-	);
-};
-
+		);
+	}
+}
 export default Game;
