@@ -68,6 +68,7 @@ class Game extends Component {
 	changeRoundHandler() {
 		if (questionCounter === 11) {
 			this.setState({ roundOver: true });
+			this.props.setRoundHandler();
 			return (roundCounter = 2);
 		}
 	}
@@ -82,7 +83,12 @@ class Game extends Component {
 
 	render() {
 		if (roundCounter === 2 && this.state.roundOver === true) {
-			return <RoundOverMessage changingRound={this.changingRound} />;
+			return (
+				<RoundOverMessage
+					changingRound={this.changingRound}
+					pigeon={this.props.pigeon}
+				/>
+			);
 		} else if (
 			roundCounter === 2 &&
 			questionCounter > 20 &&
