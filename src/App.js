@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import EggAndPigeon from './Components/EggAndPigeon/EggAndPigeon';
+import React, { useEffect, useState } from 'react';
 import BlueEgg from './Images/Eggs/egg-blue.png';
 import RedEgg from './Images/Eggs/red-egg.png';
 import GreenEgg from './Images/Eggs/green-egg.png';
@@ -8,6 +7,7 @@ import RedPigeon from './Images/Pigeon/Red-Pigeon.png';
 import GreenPigeon from './Images/Pigeon/GreenPigeon.png';
 import Game from './Components/Game/Game';
 import Home from './Components/Home/Home';
+import Data from './Apprentice_TandemFor400_Data.json';
 import './App.css';
 
 function App() {
@@ -17,6 +17,8 @@ function App() {
 	const [displayGame, setDisplayGame] = useState(false);
 	//set round
 	const [round, setRound] = useState(1);
+
+	//setPigeon handler function
 	const setPigeonHandler = (pigeon) => {
 		if (round === 1) {
 			pigeon === BluePigeon
@@ -24,22 +26,21 @@ function App() {
 				: pigeon === RedPigeon
 				? setPigeon(RedEgg)
 				: setPigeon(GreenEgg);
-		} else {
-			pigeon === BlueEgg
-				? setPigeon(BluePigeon)
-				: pigeon === RedEgg
-				? setPigeon(RedPigeon)
-				: setPigeon(GreenPigeon);
 		}
 		setDisplayGame(true);
 	};
 	const setRoundHandler = () => {
 		setRound(2);
+		pigeon === BlueEgg
+			? setPigeon(BluePigeon)
+			: pigeon === RedEgg
+			? setPigeon(RedPigeon)
+			: setPigeon(GreenPigeon);
 	};
 
 	return (
 		<div className='App'>
-			<Home setPigeonHandler={setPigeonHandler} />
+			{displayGame === false && <Home setPigeonHandler={setPigeonHandler} />}
 			{/* <EggAndPigeon /> */}
 			{displayGame === true && (
 				<Game pigeon={pigeon} setRoundHandler={setRoundHandler} />
