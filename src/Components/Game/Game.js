@@ -20,6 +20,7 @@ class Game extends Component {
 			gameMessage: '',
 			roundOver: false,
 			gameOver: false,
+			eggAndPigeonWidth: 70,
 		};
 	}
 	componentDidMount() {
@@ -49,6 +50,7 @@ class Game extends Component {
 			answersCounter = answersCounter + 1;
 			score = score + 1;
 			questionCounter = questionCounter + 1;
+			this.setState({ eggAndPigeonWidth: this.state.eggAndPigeonWidth + 20 });
 			this.changeRoundHandler();
 			this.gameAnswers();
 			this.setState({ gameMessage: 'Correct!' });
@@ -67,6 +69,7 @@ class Game extends Component {
 	//changes the round
 	changeRoundHandler() {
 		if (questionCounter === 11) {
+			this.setState({ eggAndPigeonWidth: 70 });
 			this.setState({ roundOver: true });
 			this.props.setRoundHandler();
 			return (roundCounter = 2);
@@ -104,7 +107,10 @@ class Game extends Component {
 					</header>
 					<main>
 						<div>
-							<img src={this.props.pigeon} alt='pigeon'></img>
+							<img
+								src={this.props.pigeon}
+								style={{ width: `${this.state.eggAndPigeonWidth}px` }}
+								alt='pigeon'></img>
 						</div>
 						<div>
 							<h2>{this.state.gameMessage}</h2>

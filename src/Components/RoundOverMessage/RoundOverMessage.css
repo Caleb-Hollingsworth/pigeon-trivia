@@ -3,6 +3,6 @@
 	flex-direction: row;
 	justify-content: center;
 }
-.pigeon img {
-	width: 200px;
+.pigeon-image {
+	width: 70px;
 }
